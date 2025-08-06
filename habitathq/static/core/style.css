@@ -1,0 +1,16 @@
+/* In core/static/core/style.css */
+
+body {
+    
+    font-family: sans-serif; margin: 2em; }
+        .notice-board { margin-top: 2em; }
+        .notice { border: 1px solid #ccc; padding: 1em; margin-bottom: 1em; border-radius: 5px; }
+        .notice h3 { margin-top: 0; }
+        .notice-meta { font-size: 0.8em; color: #666;
+}
+
+h1 {
+    /* This will add a custom underline to h1 tags */
+    border-bottom: 2px solid #4f46e5; /* An indigo color */
+    padding-bottom: 8px;
+}

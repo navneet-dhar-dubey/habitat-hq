@@ -1,0 +1,69 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Expected Visitors</h1>
+    <p class="text-xl text-gray-600">{{ today|date:"l, d F Y" }}</p>
+</div>
+
+<div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <table class="min-w-full leading-normal">
+        <thead>
+            <tr>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Expected Time
+                </th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Visitor Name
+                </th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Visiting Resident
+                </th>
+                <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for visitor in expected_visitors %}
+        <tr>
+            <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">
+                {{ visitor.expected_datetime|date:"h:i A" }}
+            </td>
+            <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">{{ visitor.full_name }}</p>
+            </td>
+            <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm">
+                <p class="text-gray-900 whitespace-no-wrap">{{ visitor.visiting_for.get_full_name }}</p>
+            </td>
+            <td class="px-5 py-4 border-b border-gray-200 bg-white text-sm text-center">
+                <form method="post" class="inline-block">
+                    {% csrf_token %}
+                    <input type="hidden" name="visitor_id" value="{{ visitor.id }}">
+                    
+                    {% if visitor.status == 'EXPECTED' %}
+                        <button type="submit" name="action" value="ARRIVED" class="px-3 py-1 bg-green-500 text-white text-xs rounded-full hover:bg-green-600">
+                            Mark as Arrived
+                        </button>
+                    {% elif visitor.status == 'ARRIVED' %}
+                        <button type="submit" name="action" value="DEPARTED" class="px-3 py-1 bg-red-500 text-white text-xs rounded-full hover:bg-red-600">
+                            Mark as Departed
+                        </button>
+                    {% else %}
+                        <span class="text-xs text-gray-500">{{ visitor.get_status_display }}</span>
+                    {% endif %}
+                </form>
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="4" class="px-5 py-5 text-center text-gray-500">
+                No visitors expected for the rest of today.
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+    </table>
+</div>
+
+{% endblock content %}
