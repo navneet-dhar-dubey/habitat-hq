@@ -39,7 +39,7 @@ The following features are planned for future development to make Habitat HQ a c
 * **Backend:** Python, Django
 * **Database:** SQLite3 (for development), PostgreSQL (for production)
 * **Frontend:** HTML, CSS, JavaScript
-* **Future Integrations:** Django REST Framework, Django Channels, Celery & Redis
+* **Future Integrations:** Django REST Framework, Django Channels, Celery & Redis, FastAPI
 
 ---
 
